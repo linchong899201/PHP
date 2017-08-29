@@ -1,0 +1,7 @@
+#禁止访问除了我自己
+<Limit GET POST PUT>
+	Order deny,allow
+	deny from all
+	allow from ::1
+	allow from 125.111.79.249
+</Limit>

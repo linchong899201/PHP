@@ -1,0 +1,1 @@
+把mailingsystem文件夹和mailing_list.php移到htdocs文件下面
