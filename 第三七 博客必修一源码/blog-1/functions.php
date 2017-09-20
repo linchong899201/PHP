@@ -1,0 +1,51 @@
+<?php namespace Blog\DB;
+
+$config = array(
+    'username'=>'root',
+    'password'=>'root',
+    'database' =>'blog'
+);
+ 
+function connect($config){
+	try{
+		$conn = new \PDO('mysql:host=localhost;dbname=' . $config['database'],
+			$config['username'],
+			$config['password'],
+			//解决中文字符显示问题
+			array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'')
+		);
+		$conn->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
+		return $conn;
+	}catch(Exception $e){
+		return false;
+	}
+//return pdo connection
+}
+
+function get($tableName,$conn,$limit = 10){
+	try {
+		$result = $conn->query("select * from $tableName limit $limit");
+
+		return ($result->rowCount() > 0)
+			? $result
+			: false;
+	} catch (Exception $e) {
+		return false;
+	}
+}
+
+function query($query,$bindings,$conn){
+	$stmt = $conn->prepare($query);
+	//$stmt = $conn -> query("select * from users where id = :id");
+	$stmt->execute($bindings);
+	//$stmt->execute('id'=>126);
+
+	//return $stmt->fetchAll();
+
+	$results = $stmt->fetchAll();
+
+	return $results ? $results : false;
+
+}
+
+?>
