@@ -1,0 +1,5 @@
+AuthName "Adminstrators Only"
+AuthType Basic
+#验证文件信息的路径
+AuthUserFile D:/xampp/htdocs/User/linda/.htpasswd
+Require valid-user
